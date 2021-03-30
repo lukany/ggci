@@ -1,0 +1,7 @@
+gitlab_token: xxxxxxx
+
+google_chat_url: https://chat.googleapis.com/v1/spaces/...
+
+user_mappings:  # OPTIONAL, used for mentions; key: GitLab ID, val: Google Chat ID
+  5894317: 120984893489384029908  # Gandalf
+  4985120: 109238409842809234892  # Chuck Norris

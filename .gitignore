@@ -1,0 +1,17 @@
+*.pyc
+__pycache__/
+
+.pytest_cache/
+.coverage
+
+dist/
+build/
+*.egg-info/
+
+# Configuration files
+*.yaml
+!example_config.yaml
+
+# Payloads from GitLab (useful for debugging)
+*.json
+!example_payload.json
