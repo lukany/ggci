@@ -21,7 +21,9 @@ def test_update(payload_mr_update: MergeRequestEvent, monkeypatch):
     monkeypatch.setattr(commons, '_get_google_chat_id', user_mappings.get)
     message = mr_event.create_message()
 
-    assert '*Reassigned*' in message.text
+    assert (
+        '<https://www.gitlab.com/lukany/ggci|!42> *reassigned*' in message.text
+    )
     assert 'by Chuck Norris' in message.text
     assert '\tPrevious assignees: Alice, Bob' in message.text
     assert '\tCurrent assignees: Carl, <users/1004>' in message.text
@@ -30,10 +32,15 @@ def test_update(payload_mr_update: MergeRequestEvent, monkeypatch):
 def test_approved(payload_mr_approved: MergeRequestEvent):
     mr_event = MergeRequestEvent.from_dict(payload_mr_approved)
     message = mr_event.create_message()
-    assert message.text == '*Approved* by Chuck Norris.'
+    assert message.text == (
+        '<https://www.gitlab.com/lukany/ggci|!42> *approved* by Chuck Norris.'
+    )
 
 
 def test_merge(payload_mr_merge: MergeRequestEvent):
     mr_event = MergeRequestEvent.from_dict(payload_mr_merge)
     message = mr_event.create_message()
-    assert message.text == '*Merged* by Chuck Norris.'
+    assert (
+        message.text
+        == '<https://www.gitlab.com/lukany/ggci|!42> *merged* by Chuck Norris.'
+    )

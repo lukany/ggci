@@ -94,6 +94,10 @@ class MergeRequestEvent:
     def long_link(self) -> str:
         return f'<{self.url}|!{self.mr_iid} *{self.title}*>'
 
+    @property
+    def short_link(self) -> str:
+        return f'<{self.url}|!{self.mr_iid}>'
+
     def create_message(self) -> Message:
 
         if self.action == Action.OPEN:
@@ -106,9 +110,9 @@ class MergeRequestEvent:
                 )
             )
         elif self.action == Action.APPROVED:
-            text = f'*Approved* by {self.event_author}.'
+            text = f'{self.short_link} *approved* by {self.event_author}.'
         elif self.action == Action.MERGE:
-            text = f'*Merged* by {self.event_author}.'
+            text = f'{self.short_link} *merged* by {self.event_author}.'
         elif self.action == Action.UPDATE:
             assert isinstance(self.assignees_change, AssigneesChange)
             previous = format_users(users=self.assignees_change.previous)
@@ -117,7 +121,7 @@ class MergeRequestEvent:
             )
             text = '\n'.join(
                 (
-                    f'*Reassigned* by {self.event_author}',
+                    f'{self.short_link} *reassigned* by {self.event_author}',
                     f'\tPrevious assignees: {previous}',
                     f'\tCurrent assignees: {current}',
                 )

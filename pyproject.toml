@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "ggci"
-version = "0.1.0"
+version = "0.1.1"
 description = "GitLab Google Chat Integration"
 authors = [
     "Jan Lukány <lukany.jan@gmail.com>",

@@ -45,7 +45,7 @@ Supported actions:
 
 - *open*: includes link with title, event author, mentions of assignees
   and description
-- *approved*: includes event author
-- *update of assigness*: includes event author, list of previous assigness
-  and mentions of current assignees
-- *merged*: includes action author
+- *approved*: includes link and event author
+- *update of assigness*: includes link, event author, list of previous
+  assigness and mentions of current assignees
+- *merged*: includes link and action author
