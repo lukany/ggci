@@ -91,7 +91,7 @@ class MergeRequestEvent:
         )
 
     @property
-    def link(self) -> str:
+    def long_link(self) -> str:
         return f'<{self.url}|!{self.mr_iid} *{self.title}*>'
 
     def create_message(self) -> Message:
@@ -100,7 +100,7 @@ class MergeRequestEvent:
             assignees = format_users(self.assignees, mention=True)
             text = '\n'.join(
                 (
-                    f'*Opened* {self.link} by {self.event_author}',
+                    f'*Opened* {self.long_link} by {self.event_author}',
                     f'*Assignees:* {assignees}',
                     f'*Description:* {self.description}',
                 )
