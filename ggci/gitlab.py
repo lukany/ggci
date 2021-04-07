@@ -29,7 +29,6 @@ class AssigneesChange:
         cls,
         changes: Dict[str, List[Dict[str, Any]]],
     ) -> AssigneesChange:
-        print(changes)
         return cls(
             previous=[User.from_dict(asgn) for asgn in changes['previous']],
             current=[User.from_dict(asgn) for asgn in changes['current']],

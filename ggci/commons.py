@@ -19,7 +19,6 @@ def format_users(users: Union[User, List[User]], mention: bool = False) -> str:
     else:
         formatted_users = [str(user) for user in users]
 
-    print(formatted_users)
     return ', '.join(formatted_users)
 
 
@@ -38,7 +37,6 @@ class User:
 
     def mention(self) -> str:
         google_chat_user_id = _get_google_chat_id(self.gitlab_user_id)
-        print(':::::::', google_chat_user_id)
         if google_chat_user_id is None:
             _LOGGER.warning(
                 'No Google Chat user ID found for GitLab user ID %d',
