@@ -79,7 +79,6 @@ class MergeRequestEvent:
                 f' Supported actions are: {[a.value for a in Action]}.',
             ) from exc
 
-
         try:
             assignees_change_dict = event_dict['changes']['assignees']
         except KeyError as exc:
