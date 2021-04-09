@@ -30,6 +30,10 @@ documentation](https://flask.palletsprojects.com/en/1.1.x/).
 
 ## Configuration
 
+There are several ways how `ggci` can be configured.
+
+### YAML config (default)
+
 By default `create_app()` looks for a YAML configuration file specified
 by `GGCI_CONFIG` environment variable.
 Example config:
@@ -44,8 +48,25 @@ user_mappings:  # OPTIONAL, used for mentions; key: GitLab ID, val: Google Chat 
   4985120: 109238409842809234892  # Chuck Norris
 ```
 
+### Config Object
+
 Alternatively, `create_app()` also accepts optional argument `config` of type
 `ggci.Config`.
+
+```python
+from ggci import Config, create_app
+
+config = Config(
+    gitlab_token='xxxxxxxxxx',
+    google_chat_url='https://chat.googleapis.com/v1/spaces/...',
+    user_mappings={
+        5894317: 120984893489384029908,  # Gandalf
+        4985120: 109238409842809234892,  # Chuck Norris
+    },
+)
+
+app = create_app(config=config)
+```
 
 ## Features
 
