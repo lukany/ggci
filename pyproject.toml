@@ -6,6 +6,7 @@ license = "MIT"
 authors = [
     "Jan Lukány <lukany.jan@gmail.com>",
 ]
+readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.7"

@@ -3,7 +3,7 @@
 A Python Flask web application that forwards webhook requests
 from GitLab to Google Chat.
 
-![GGCI showcase](showcase.png)
+![GGCI showcase](https://raw.githubusercontent.com/lukany/ggci/cb0886eb6594e36c5e56e54f00dbfdb71d3d8629/showcase.png)
 
 ## Installation
 
