@@ -2,6 +2,7 @@
 name = "ggci"
 version = "0.1.2"
 description = "GitLab Google Chat Integration"
+license = "MIT"
 authors = [
     "Jan Lukány <lukany.jan@gmail.com>",
 ]
