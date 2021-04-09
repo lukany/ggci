@@ -15,15 +15,18 @@ It can be installed via standard package managers in Python, e.g. pip:
 pip install ggci
 ```
 
-## How to run
+## Usage
 
-`ggci` provides Flask application factory `create_app()`:
+`ggci` provides a standard Flask application factory `create_app()`:
 
 ```python
 from ggci import create_app
 
 app = create_app()
 ```
+
+For how to use this application factory refer to the official [Flask
+documentation](https://flask.palletsprojects.com/en/1.1.x/).
 
 ## Configuration
 
