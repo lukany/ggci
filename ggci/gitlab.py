@@ -17,6 +17,7 @@ class Action(Enum):
     MERGE = 'merge'
     APPROVED = 'approved'
     CLOSE = 'close'
+    REOPEN = 'reopen'
 
 
 @dataclass
@@ -144,5 +145,7 @@ class MergeRequestEvent:
             )
         elif self.action == Action.CLOSE:
             text = f'{self.short_link} *closed* by {self.event_author}.'
+        elif self.action == Action.REOPEN:
+            text = f'{self.short_link} *reopened* by {self.event_author}.'
 
         return Message(text=text, thread_key=self.mr_id)

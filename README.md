@@ -84,3 +84,4 @@ Supported actions:
   assigness and mentions of current assignees
 - *merged*: includes link and action author
 - *closed*: includes link and action author
+- *reopened*: includes link and action author

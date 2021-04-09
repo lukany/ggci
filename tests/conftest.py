@@ -94,3 +94,10 @@ def payload_mr_close() -> MergeRequestEvent:
     payload = _create_payload()
     payload['object_attributes']['action'] = 'close'
     yield payload
+
+
+@pytest.fixture(scope='function')
+def payload_mr_reopen() -> MergeRequestEvent:
+    payload = _create_payload()
+    payload['object_attributes']['action'] = 'reopen'
+    yield payload
