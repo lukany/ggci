@@ -19,7 +19,7 @@ def forward():
     try:
         mr_event = MergeRequestEvent.from_dict(request.json)
     except UnsupportedEvent as exc:
-        return exc, 501
+        return str(exc), 501
 
     send_message(message=mr_event.create_message())
 
