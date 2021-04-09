@@ -1,6 +1,8 @@
 from typing import Any, Dict
 
-from ggci.gitlab import MergeRequestEvent
+import pytest
+
+from ggci.gitlab import MergeRequestEvent, UnsupportedEvent
 from ggci import commons
 
 
@@ -46,3 +48,17 @@ def test_merge(payload_mr_merge: Dict[str, Any]):
         message.text
         == '<https://www.gitlab.com/lukany/ggci|!42> *merged* by Chuck Norris.'
     )
+
+
+def test_no_action(payload_mr_open: Dict[str, Any]):
+    payload_without_action = payload_mr_open
+    del payload_without_action['object_attributes']['action']
+    with pytest.raises(UnsupportedEvent):
+        MergeRequestEvent.from_dict(payload_without_action)
+
+
+def test_invalid_action(payload_mr_open: Dict[str, Any]):
+    payload_invalid_action = payload_mr_open
+    payload_invalid_action['object_attributes']['action'] = 'shredded'
+    with pytest.raises(UnsupportedEvent):
+        MergeRequestEvent.from_dict(payload_invalid_action)

@@ -61,7 +61,22 @@ class MergeRequestEvent:
 
         mr_attrs = event_dict['object_attributes']
 
-        action = Action(mr_attrs['action'])
+        try:
+            action_str = mr_attrs['action']
+        except KeyError as exc:
+            raise UnsupportedEvent(
+                'Only "merge_request" events with "action" in'
+                ' "object_attributes" are supported',
+            ) from exc
+
+        try:
+            action = Action(action_str)
+        except ValueError as exc:
+            raise UnsupportedEvent(
+                f'Unsupported "action" of "merge_request" event: {action_str}.'
+                f' Supported actions are: {[a.value for a in Action]}.',
+            ) from exc
+
 
         try:
             assignees_change_dict = event_dict['changes']['assignees']
