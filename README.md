@@ -5,6 +5,16 @@ from GitLab to Google Chat.
 
 ![GGCI showcase](showcase.png)
 
+## Installation
+
+`ggci` is available as a Python package
+on [PyPI](https://pypi.org/project/ggci).
+It can be installed via standard package managers in Python, e.g. pip:
+
+```sh
+pip install ggci
+```
+
 ## How to run
 
 `ggci` provides Flask application factory `create_app()`:
