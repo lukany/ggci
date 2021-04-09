@@ -83,3 +83,4 @@ Supported actions:
 - *update of assigness*: includes link, event author, list of previous
   assigness and mentions of current assignees
 - *merged*: includes link and action author
+- *closed*: includes link and action author

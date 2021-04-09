@@ -16,6 +16,7 @@ class Action(Enum):
     UPDATE = 'update'
     MERGE = 'merge'
     APPROVED = 'approved'
+    CLOSE = 'close'
 
 
 @dataclass
@@ -141,5 +142,7 @@ class MergeRequestEvent:
                     f'\tCurrent assignees: {current}',
                 )
             )
+        elif self.action == Action.CLOSE:
+            text = f'{self.short_link} *closed* by {self.event_author}.'
 
         return Message(text=text, thread_key=self.mr_id)

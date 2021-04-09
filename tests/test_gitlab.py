@@ -50,6 +50,15 @@ def test_merge(payload_mr_merge: Dict[str, Any]):
     )
 
 
+def test_close(payload_mr_close: Dict[str, Any]):
+    mr_event = MergeRequestEvent.from_dict(payload_mr_close)
+    message = mr_event.create_message()
+    assert (
+        message.text
+        == '<https://www.gitlab.com/lukany/ggci|!42> *closed* by Chuck Norris.'
+    )
+
+
 def test_no_action(payload_mr_open: Dict[str, Any]):
     payload_without_action = payload_mr_open
     del payload_without_action['object_attributes']['action']
