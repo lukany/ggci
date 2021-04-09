@@ -1,8 +1,10 @@
+from typing import Any, Dict
+
 from ggci.gitlab import MergeRequestEvent
 from ggci import commons
 
 
-def test_open(payload_mr_open, monkeypatch):
+def test_open(payload_mr_open: Dict[str, Any], monkeypatch):
     mr_event = MergeRequestEvent.from_dict(payload_mr_open)
     monkeypatch.setattr(commons, '_get_google_chat_id', lambda _: 100042)
     message = mr_event.create_message()
@@ -12,7 +14,7 @@ def test_open(payload_mr_open, monkeypatch):
     assert '*Assignees:* <users/100042>' in message.text
 
 
-def test_update(payload_mr_update: MergeRequestEvent, monkeypatch):
+def test_update(payload_mr_update: Dict[str, Any], monkeypatch):
     mr_event = MergeRequestEvent.from_dict(payload_mr_update)
     user_mappings = {
         1: 1001,
@@ -29,7 +31,7 @@ def test_update(payload_mr_update: MergeRequestEvent, monkeypatch):
     assert '\tCurrent assignees: Carl, <users/1004>' in message.text
 
 
-def test_approved(payload_mr_approved: MergeRequestEvent):
+def test_approved(payload_mr_approved: Dict[str, Any]):
     mr_event = MergeRequestEvent.from_dict(payload_mr_approved)
     message = mr_event.create_message()
     assert message.text == (
@@ -37,7 +39,7 @@ def test_approved(payload_mr_approved: MergeRequestEvent):
     )
 
 
-def test_merge(payload_mr_merge: MergeRequestEvent):
+def test_merge(payload_mr_merge: Dict[str, Any]):
     mr_event = MergeRequestEvent.from_dict(payload_mr_merge)
     message = mr_event.create_message()
     assert (
