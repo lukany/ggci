@@ -80,8 +80,7 @@ Supported actions:
 - *open*: includes link with title, event author, mentions of assignees
   and description
 - *approved*: includes link and event author
-- *update of assigness*: includes link, event author, list of previous
-  assigness and mentions of current assignees
+- *update of assigness*: includes link and mentions of current assignees
 - *merged*: includes link and action author
 - *closed*: includes link and action author
 - *reopened*: includes link and action author

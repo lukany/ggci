@@ -26,11 +26,9 @@ def test_update(payload_mr_update: Dict[str, Any], monkeypatch):
     message = mr_event.create_message()
 
     assert (
-        '<https://www.gitlab.com/lukany/ggci|!42> *reassigned*' in message.text
-    )
-    assert 'by Chuck Norris' in message.text
-    assert '\tPrevious assignees: Alice, Bob' in message.text
-    assert '\tCurrent assignees: Carl, <users/1004>' in message.text
+        '<https://www.gitlab.com/lukany/ggci|!42> *reassigned*'
+        ' to Carl, <users/1004>'
+    ) in message.text
 
 
 def test_approved(payload_mr_approved: Dict[str, Any]):
