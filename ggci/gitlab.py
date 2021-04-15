@@ -131,17 +131,10 @@ class MergeRequestEvent:
             text = f'{self.short_link} *merged* by {self.event_author}.'
         elif self.action == Action.UPDATE:
             assert isinstance(self.assignees_change, AssigneesChange)
-            previous = format_users(users=self.assignees_change.previous)
-            current = format_users(
+            current_assignees = format_users(
                 users=self.assignees_change.current, mention=True
             )
-            text = '\n'.join(
-                (
-                    f'{self.short_link} *reassigned* by {self.event_author}',
-                    f'\tPrevious assignees: {previous}',
-                    f'\tCurrent assignees: {current}',
-                )
-            )
+            text = f'{self.short_link} *reassigned* to {current_assignees}'
         elif self.action == Action.CLOSE:
             text = f'{self.short_link} *closed* by {self.event_author}.'
         elif self.action == Action.REOPEN:
