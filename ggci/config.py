@@ -14,8 +14,7 @@ class ConfigError(Exception):
 class Config:
     def __init__(
         self,
-        gitlab_token: str,
-        google_chat_url: str,
+        ggci_secret: str,
         user_mappings: Optional[Dict[int, int]] = None,
         **kwargs,
     ):
@@ -27,14 +26,9 @@ class Config:
         if user_mappings is None:
             user_mappings = {}
 
-        if not isinstance(gitlab_token, str):
+        if not isinstance(ggci_secret, str):
             raise TypeError(
-                f'gitlab_token must be of type str, got: {type(gitlab_token)}'
-            )
-        if not isinstance(google_chat_url, str):
-            raise TypeError(
-                f'google_chat_url must be of type str, got:'
-                f' {type(google_chat_url)}'
+                f'ggci-secret must be of type str, got: {type(ggci_secret)}'
             )
         if not isinstance(user_mappings, dict):
             raise TypeError(
@@ -43,8 +37,7 @@ class Config:
             )
 
         self._config_dict = {
-            'GGCI_GITLAB_TOKEN': gitlab_token,
-            'GGCI_GOOGLE_CHAT_URL': google_chat_url,
+            'GGCI_SECRET': ggci_secret,
             'GGCI_USER_MAPPINGS': user_mappings,
             **{key.upper(): val for key, val in kwargs.items()},
         }
