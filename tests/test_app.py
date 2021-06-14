@@ -9,8 +9,8 @@ def test_unauthorized(client):
 
 
 def test_empty(client: FlaskClient, headers):
-    with pytest.raises(Exception):
-        client.post(headers=headers, json={})
+    response = client.post(headers=headers, json={})
+    assert response.status_code == 400
 
 
 @pytest.mark.live_google_chat

@@ -11,6 +11,10 @@ class UnsupportedEvent(Exception):
     pass
 
 
+class InvalidFormat(Exception):
+    pass
+
+
 class Action(Enum):
     OPEN = 'open'
     UPDATE = 'update'
@@ -55,10 +59,15 @@ class MergeRequestEvent:
     @classmethod
     def from_dict(cls, event_dict: Dict[str, Any]) -> MergeRequestEvent:
 
-        if event_dict['event_type'] != 'merge_request':
+        try:
+            event_type = event_dict['event_type']
+        except KeyError as exc:
+            raise InvalidFormat('Missing event_type') from exc
+
+        if event_type != 'merge_request':
             raise UnsupportedEvent(
                 f'Only "merge_request" events are currently supported, got:'
-                f' {event_dict["event_type"]}'
+                f' {event_type}'
             )
 
         mr_attrs = event_dict['object_attributes']
