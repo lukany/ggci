@@ -39,9 +39,7 @@ by `GGCI_CONFIG` environment variable.
 Example config:
 
 ```YAML
-gitlab_token: xxxxxxx
-
-google_chat_url: https://chat.googleapis.com/v1/spaces/...
+ggci_secret: xxxxxxx
 
 user_mappings:  # OPTIONAL, used for mentions; key: GitLab ID, val: Google Chat ID
   5894317: 120984893489384029908  # Gandalf
@@ -57,8 +55,7 @@ Alternatively, `create_app()` also accepts optional argument `config` of type
 from ggci import Config, create_app
 
 config = Config(
-    gitlab_token='xxxxxxxxxx',
-    google_chat_url='https://chat.googleapis.com/v1/spaces/...',
+    ggci_secret='xxxxxxx',
     user_mappings={
         5894317: 120984893489384029908,  # Gandalf
         4985120: 109238409842809234892,  # Chuck Norris

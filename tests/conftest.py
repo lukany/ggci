@@ -1,3 +1,4 @@
+import os
 from typing import Any, Dict, Iterator
 
 import pytest
@@ -7,6 +8,7 @@ from ggci import create_app, Config, load_yaml_config
 from ggci.gitlab import MergeRequestEvent
 
 _CONFIG = load_yaml_config('example_config.yaml')
+_GOOGLE_CHAT_URL = os.environ.get('GGCI_GOOGLE_CHAT_URL')
 
 
 def _create_payload():
@@ -42,14 +44,18 @@ def _create_mr_event(payload: Dict[str, Any]) -> MergeRequestEvent:
 
 @pytest.fixture
 def headers() -> Dict[str, Any]:
-    return {'X-GitLab-Token': _CONFIG['GGCI_GITLAB_TOKEN']}
+    return {
+        'X-GitLab-Token': (
+            f'GGCI-SECRET={_CONFIG["GGCI_SECRET"]};'
+            f'GOOGLE-CHAT-URL={_GOOGLE_CHAT_URL}'
+        )
+    }
 
 
 @pytest.fixture(scope='session')
 def client() -> Iterator[FlaskClient]:
     config = Config(
-        gitlab_token=_CONFIG['GGCI_GITLAB_TOKEN'],
-        google_chat_url=_CONFIG['GGCI_GOOGLE_CHAT_URL'],
+        ggci_secret=_CONFIG['GGCI_SECRET'],
         user_mappings=_CONFIG['GGCI_USER_MAPPINGS'],
     )
     app = create_app(config)

@@ -1,27 +1,31 @@
 import logging
-from typing import Optional
 
 import requests
-from flask import current_app
-
+import tenacity
 
 from ggci.commons import Message
 
 _LOGGER = logging.getLogger(__name__)
 
 
-def _get_google_chat_url() -> Optional[str]:
-    return current_app.config.get('GGCI_GOOGLE_CHAT_URL')
+class GoogleChatError(Exception):
+    def __init__(self, error):
+
+        if isinstance(error, tenacity.Future):
+            # Tenacity initiates `retry_error_cls` with tenacity.Future.
+            # containing more information along with the exception itself
+            error = error.exception()
+
+        super().__init__(error)
 
 
-def send_message(message: Message) -> None:
-
-    url = _get_google_chat_url()
-
-    if not isinstance(url, str):
-        raise TypeError(f'Google Chat URL must be str, got: {type(url)}')
-    if not url:
-        raise ValueError('Google Chat URL must not be empty')
+@tenacity.retry(
+    retry=tenacity.retry_if_exception_type(requests.exceptions.HTTPError),
+    stop=tenacity.stop_after_attempt(5),
+    wait=tenacity.wait.wait_random(min=0.05, max=0.2),
+    retry_error_cls=GoogleChatError,
+)
+def send_message(url: str, message: Message) -> None:
 
     _LOGGER.info('Sending message...')
     _LOGGER.debug('Message: %s', message)
@@ -29,4 +33,5 @@ def send_message(message: Message) -> None:
     if message.thread_key is not None:
         url += f'&threadKey=GGCI_{message.thread_key}'
 
-    requests.post(url=url, json={'text': message.text})
+    response = requests.post(url=url, json={'text': message.text})
+    response.raise_for_status()

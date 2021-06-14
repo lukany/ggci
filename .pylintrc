@@ -1,6 +1,0 @@
-[FORMAT]
-max-line-length=79
-
-disable=
-    missing-docstring,
-    too-few-public-methods
