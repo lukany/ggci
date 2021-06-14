@@ -4,7 +4,7 @@ from typing import Tuple
 
 from flask import Blueprint, current_app, request
 
-from ggci.google_chat import send_message
+from ggci.google_chat import GoogleChatError, send_message
 from ggci.gitlab import MergeRequestEvent, UnsupportedEvent
 
 _GITLAB_TOKEN_REGEX_PATTERN = 'GGCI-SECRET=(.*);GOOGLE-CHAT-URL=(.*)'
@@ -65,6 +65,9 @@ def forward():
     except UnsupportedEvent as exc:
         return str(exc), 501
 
-    send_message(url=google_chat_url, message=mr_event.create_message())
+    try:
+        send_message(url=google_chat_url, message=mr_event.create_message())
+    except GoogleChatError as exc:
+        return str(exc), 500
 
     return 'Success', 200
