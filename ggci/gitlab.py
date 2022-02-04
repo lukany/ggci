@@ -143,7 +143,10 @@ class MergeRequestEvent:
             current_assignees = format_users(
                 users=self.assignees_change.current, mention=True
             )
-            text = f'{self.short_link} *reassigned* to {current_assignees}'
+            if not current_assignees:
+                text = f'{self.short_link} *unassigned*'
+            else:
+                text = f'{self.short_link} *reassigned* to {current_assignees}'
         elif self.action == Action.CLOSE:
             text = f'{self.short_link} *closed* by {self.event_author}.'
         elif self.action == Action.REOPEN:
