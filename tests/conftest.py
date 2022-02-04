@@ -35,6 +35,10 @@ def _create_payload():
             'title': 'Improve the world',
         },
         'changes': {},
+        'project': {
+            'name': 'GGCI',
+            'web_url': 'https://www.gitlab.com/lukany/ggci',
+        },
     }
 
 

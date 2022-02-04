@@ -42,6 +42,16 @@ class AssigneesChange:
 
 
 @dataclass
+class Project:
+    name: str
+    web_url: str
+
+    @property
+    def link(self) -> str:
+        return f'<{self.web_url}|{self.name}>'
+
+
+@dataclass
 class MergeRequestEvent:
 
     # pylint: disable=too-many-instance-attributes
@@ -54,6 +64,7 @@ class MergeRequestEvent:
     title: str
     action: Action
     event_author: User
+    project: Project
     assignees_change: Optional[AssigneesChange] = None
 
     @classmethod
@@ -113,6 +124,10 @@ class MergeRequestEvent:
             action=Action(mr_attrs['action']),
             event_author=User.from_dict(user_dict=event_dict['user']),
             assignees_change=assignees_change,
+            project=Project(
+                name=event_dict['project']['name'],
+                web_url=event_dict['project']['web_url'],
+            ),
         )
 
     @property
@@ -130,6 +145,7 @@ class MergeRequestEvent:
             text = '\n'.join(
                 (
                     f'*Opened* {self.long_link} by {self.event_author}',
+                    f'*Project*: {self.project.link}',
                     f'*Assignees:* {assignees}',
                     f'*Description:* {self.description}',
                 )
@@ -143,7 +159,10 @@ class MergeRequestEvent:
             current_assignees = format_users(
                 users=self.assignees_change.current, mention=True
             )
-            text = f'{self.short_link} *reassigned* to {current_assignees}'
+            if not current_assignees:
+                text = f'{self.short_link} *unassigned*'
+            else:
+                text = f'{self.short_link} *reassigned* to {current_assignees}'
         elif self.action == Action.CLOSE:
             text = f'{self.short_link} *closed* by {self.event_author}.'
         elif self.action == Action.REOPEN:
